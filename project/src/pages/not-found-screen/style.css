@@ -1,0 +1,39 @@
+.page__main--not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+}
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.not-found__title {
+  z-index: 1;
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 28px;
+
+  font-size: 32px;
+  line-height: 1.1875;
+  font-weight: 700;
+  font-style: oblique;
+}
+
+.not-found__link {
+  display: block;
+
+  font-size: 19px;
+  line-height: 1.211;
+  font-weight: 300;
+  font-style: oblique;
+
+  transition: text-shadow .3s;
+}
+
+.not-found__link:hover {
+  text-shadow: 1px 0 0, 0.5px 0 0, -1px 0 0;
+}
