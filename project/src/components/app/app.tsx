@@ -5,19 +5,20 @@ import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import PropertyScreen from '../../pages/property-screen/property-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
+import {Offers} from '../../types/offer';
 
 type AppScreenProps = {
-  offersCount: number;
+  offers: Offers;
 }
 
-function App({offersCount} : AppScreenProps): JSX.Element {
+function App({offers} : AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main} element={<Layout />}>
           <Route
             path={AppRoute.Main}
-            element={<MainScreen offersCount={offersCount}/>}
+            element={<MainScreen offers={offers} />}
           />
           <Route
             path={AppRoute.Login}
