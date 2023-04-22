@@ -39,3 +39,10 @@ export const LOCATIONS = [
   'Hamburg',
   'Dusseldorf'
 ];
+
+export const SortTypes = {
+  DEFAULT: 'Popular',
+  PRICE_TO_HIGH: 'Price: low to high',
+  PRICE_TO_LOW: 'Price: high to low',
+  RATING: 'Top rated first'
+};

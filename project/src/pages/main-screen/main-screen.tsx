@@ -2,19 +2,13 @@ import {useEffect, useState} from 'react';
 import {Offers} from '../../types/offer';
 import LocationsList from '../../components/locations-list/locations-list';
 import {LOCATIONS} from '../../const';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {setLocation} from '../../store/action';
+import {useAppSelector} from '../../hooks';
 import Cities from '../../components/cities/cities';
 import CitiesEmpty from '../../components/cities-empty/cities-empty';
 
-type MainScreenProps = {
-  offers: Offers;
-}
-
-function MainScreen({offers} : MainScreenProps) : JSX.Element {
-  const dispatch = useAppDispatch();
-
+function MainScreen() : JSX.Element {
   const activeLocation = useAppSelector((state) => state.location);
+  const offers = useAppSelector((state) => state.offers);
 
   const [currentOffers, setCurrentOffers] = useState<Offers>([]);
 
@@ -31,7 +25,7 @@ function MainScreen({offers} : MainScreenProps) : JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <LocationsList locations={LOCATIONS} activeLocation={activeLocation} onChangeActiveLocation={(e) => dispatch(setLocation(e))}/>
+            <LocationsList locations={LOCATIONS} activeLocation={activeLocation}/>
           </section>
         </div>
         <div className="cities">

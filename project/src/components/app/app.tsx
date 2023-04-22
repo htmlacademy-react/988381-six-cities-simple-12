@@ -18,7 +18,7 @@ function App({offers} : AppScreenProps): JSX.Element {
         <Route path={AppRoute.Main} element={<Layout />}>
           <Route
             path={AppRoute.Main}
-            element={<MainScreen offers={offers} />}
+            element={<MainScreen />}
           />
           <Route
             path={AppRoute.Login}
