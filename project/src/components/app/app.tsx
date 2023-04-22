@@ -28,7 +28,7 @@ function App({offers, city} : AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<PropertyScreen />}
+            element={<PropertyScreen offers={offers} city={city} />}
           />
           <Route
             path='*'

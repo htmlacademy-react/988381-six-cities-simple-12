@@ -79,7 +79,7 @@ function MainScreen({offers, city} : MainScreenProps) : JSX.Element {
               <OfferCardList offers={offers} onChangeActiveCard={onChangeActiveCard} />
             </section>
             <div className="cities__right-section">
-              <Map city={city} offers={offers} activeCardId={activeCardId}/>
+              <Map className="cities" city={city} offers={offers} activeCardId={activeCardId}/>
             </div>
           </div>
         </div>

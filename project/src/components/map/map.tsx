@@ -6,12 +6,13 @@ import {Icon, Marker} from 'leaflet';
 import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../const';
 
 type MapProps = {
+  className: string;
   city: City;
   offers: Offers;
   activeCardId: number | null;
 }
 
-function Map({city, offers, activeCardId} : MapProps) : JSX.Element {
+function Map({className, city, offers, activeCardId} : MapProps) : JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -42,7 +43,7 @@ function Map({city, offers, activeCardId} : MapProps) : JSX.Element {
 
   return (
     <section
-      className='cities__map map'
+      className={`${className}__map map`}
       ref={mapRef}
     >
 
