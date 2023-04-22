@@ -3,15 +3,13 @@ import {useParams} from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
-import {City} from '../../types/city';
 import NearPlacesList from '../../near-places-list/near-places-list';
 
 type PropertyScreenProps = {
   offers: Offers;
-  city: City;
 }
 
-function PropertyScreen({offers, city} : PropertyScreenProps) : JSX.Element {
+function PropertyScreen({offers} : PropertyScreenProps) : JSX.Element {
   const params = useParams();
   const currentId = Number(params.id);
 
@@ -105,7 +103,7 @@ function PropertyScreen({offers, city} : PropertyScreenProps) : JSX.Element {
             </section>
           </div>
         </div>
-        <Map className="property" city={city} offers={offers} activeCardId={currentId}/>
+        <Map className="property" offers={offers} activeCardId={currentId}/>
       </section>
       <div className="container">
         <section className="near-places places">

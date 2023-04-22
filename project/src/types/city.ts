@@ -4,3 +4,5 @@ export type City = {
   lng: number;
   zoom: number;
 }
+
+export type Cities = City[];
