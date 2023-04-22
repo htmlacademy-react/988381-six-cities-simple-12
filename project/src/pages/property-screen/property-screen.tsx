@@ -7,7 +7,7 @@ function PropertyScreen() : JSX.Element {
   const params = useParams();
   const currentId = Number(params.id);
 
-  const currentOffer = offers.find((offer) => offer.id === currentId) as Offer;
+  const currentOffer = offers.find((offer) => offer.id === currentId) as Offer || undefined;
 
   const {images, title, type, price, rating, isPremium, bedrooms, adults, features, host, description, reviews} = currentOffer;
 
