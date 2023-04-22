@@ -1,6 +1,7 @@
 import {Images} from './image';
 import {Host} from './host';
 import {Reviews} from './review';
+import {City} from './city';
 
 
 export type Offer = {
@@ -17,6 +18,7 @@ export type Offer = {
   host: Host;
   description: string[];
   reviews: Reviews;
+  city: City;
 }
 
 export type Offers = Offer[];
