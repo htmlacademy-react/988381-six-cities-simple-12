@@ -1,8 +1,8 @@
 import {useState} from 'react';
-import {SortTypes} from '../../const';
+import {SortTypes} from '../../consts';
 import {Offers} from '../../types/offer';
 import {useAppDispatch} from '../../hooks';
-import {sortOffers} from '../../store/action';
+import {sortOffers} from '../../store/offer-data/offer-data';
 
 type OfferCardListSortProps = {
   offers: Offers;

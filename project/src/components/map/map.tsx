@@ -2,7 +2,7 @@ import {useEffect, useRef} from 'react';
 import useMap from '../../hooks/useMap';
 import {Offer, Offers} from '../../types/offer';
 import {Icon, Marker} from 'leaflet';
-import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../const';
+import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../consts';
 
 type MapProps = {
   className: string;

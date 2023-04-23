@@ -1,6 +1,6 @@
 import ReviewsItem from '../reviews-item/reviews-item';
 import {Reviews} from '../../types/review';
-import {MAX_COMMENTS_COUNT} from '../../const';
+import {MAX_COMMENTS_COUNT} from '../../consts';
 
 type ReviewListProps = {
   reviews: Reviews;

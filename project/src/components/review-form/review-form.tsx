@@ -1,10 +1,12 @@
 import React, {FormEvent, useEffect, useRef, useState} from 'react';
-import {MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH, RATING_DATA} from '../../const';
+import {MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH, RATING_DATA} from '../../consts';
 import Rating from '../rating/rating';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {ReviewData} from '../../types/review-data';
-import {sendReviewsAction} from '../../store/api-action';
+import {sendReviewAction} from '../../store/api-action';
 import {Offer} from '../../types/offer';
+import {getOffer} from '../../store/offer-data/selectors';
+import {getErrorStatus, getReviewSendingStatus} from '../../store/review-data/selectors';
 
 function ReviewForm() : JSX.Element {
   const dispatch = useAppDispatch();
@@ -16,6 +18,9 @@ function ReviewForm() : JSX.Element {
     review: ''
   });
   const [submitButton, setSubmitButton] = useState(false);
+
+  const hasError = useAppSelector(getErrorStatus);
+  const isReviewSending = useAppSelector(getReviewSendingStatus);
 
   useEffect(() => {
     const isDisabled = (formData.review.length < MIN_COMMENT_LENGTH || formData.review.length > MAX_COMMENT_LENGTH || formData.rating === 0);
@@ -32,11 +37,13 @@ function ReviewForm() : JSX.Element {
   };
 
   const onSubmit = (reviewData: ReviewData) => {
-    dispatch(sendReviewsAction(reviewData));
-    clearForm();
+    dispatch(sendReviewAction(reviewData));
+    if (!hasError) {
+      clearForm();
+    }
   };
 
-  const offer = useAppSelector((state) => state.offer) as Offer;
+  const offer = useAppSelector(getOffer) as Offer;
 
   const onSubmitHandle = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -72,7 +79,7 @@ function ReviewForm() : JSX.Element {
           <Rating key={rating.value} value={rating.value} title={rating.title} onChangeEvent={fieldChangeHandle} />
         ))}
       </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" ref={reviewRef} value={formData.review} onChange={fieldChangeHandle}></textarea>
+      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" ref={reviewRef} value={formData.review} disabled={isReviewSending} onChange={fieldChangeHandle}></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe

@@ -1,17 +1,18 @@
 import {useEffect, useState} from 'react';
 import {Offers} from '../../types/offer';
 import LocationsList from '../../components/locations-list/locations-list';
-import {LOCATIONS} from '../../const';
+import {LOCATIONS} from '../../consts';
 import {useAppSelector} from '../../hooks';
 import Cities from '../../components/cities/cities';
 import CitiesEmpty from '../../components/cities-empty/cities-empty';
+import {getCurrentLocation} from '../../store/offer-data/selectors';
 
 type MainScreenProps = {
   offers: Offers;
 }
 
 function MainScreen({offers} : MainScreenProps) : JSX.Element {
-  const activeLocation = useAppSelector((state) => state.location);
+  const activeLocation = useAppSelector(getCurrentLocation);
 
   const [currentOffers, setCurrentOffers] = useState<Offers>([]);
 

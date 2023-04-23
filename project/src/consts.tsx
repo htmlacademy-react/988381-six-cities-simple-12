@@ -18,6 +18,12 @@ export enum APIRoute {
   Logout = '/logout'
 }
 
+export enum NameSpace {
+  Data = 'DATA',
+  Review = 'REVIEW',
+  User = 'USER'
+}
+
 export const RATING_DATA = [
   {
     value: '5',

@@ -2,8 +2,9 @@ import {FormEvent, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {AuthData} from '../../types/auth-data';
 import {loginAction} from '../../store/api-action';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../consts';
 import {Navigate} from 'react-router-dom';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 function LoginScreen() : JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -11,7 +12,7 @@ function LoginScreen() : JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Main} />;
@@ -26,7 +27,7 @@ function LoginScreen() : JSX.Element {
     dispatch(loginAction(authData));
   };
 
-  const onSubmitHandle = (evt: FormEvent<HTMLFormElement>) => {
+  const submitHandle = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (loginRef.current !== null && (passwordRef.current !== null && checkPassword(passwordRef.current.value))) {
@@ -42,7 +43,7 @@ function LoginScreen() : JSX.Element {
       <div className="page__login-container container">
         <section className="login">
           <h1 className="login__title">Sign in</h1>
-          <form className="login__form form" action="#" method="post" onSubmit={onSubmitHandle}>
+          <form className="login__form form" action="#" method="post" onSubmit={submitHandle}>
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">E-mail</label>
               <input className="login__input form__input" type="email" name="email" placeholder="Email" ref={loginRef} required />

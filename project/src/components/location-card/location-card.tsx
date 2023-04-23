@@ -1,5 +1,6 @@
 import {useAppDispatch} from '../../hooks';
-import {setLocation} from '../../store/action';
+import {setCurrentLocation} from '../../store/offer-data/offer-data';
+
 
 type LocationCardProps = {
   location: string;
@@ -9,9 +10,13 @@ type LocationCardProps = {
 function LocationCard({location, isActive} : LocationCardProps) : JSX.Element {
   const dispatch = useAppDispatch();
 
+  const onLocationClick = () => {
+    dispatch(setCurrentLocation(location));
+  };
+
   return (
     <li className="locations__item">
-      <a className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`} href="#todo" onClick={() => dispatch(setLocation(location))}>
+      <a className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`} href="#todo" onClick={onLocationClick}>
         <span>{location}</span>
       </a>
     </li>

@@ -1,6 +1,6 @@
 import {Offer} from '../../types/offer';
 import {generatePath, Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute} from '../../consts';
 
 type NearPlacesCardProps = {
   place: Offer;
