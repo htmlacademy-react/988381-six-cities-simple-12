@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 
 type RatingProps = {
   value: string;
@@ -7,15 +7,17 @@ type RatingProps = {
 }
 
 function Rating(props: RatingProps) : JSX.Element {
+  const {value, title, onChangeEvent} = props;
+
   return (
-    <Fragment>
-      <input className="form__rating-input visually-hidden" name="rating" value={props.value} id={`${props.value}-stars`} type="radio" onChange={props.onChangeEvent} />
-      <label htmlFor={`${props.value}-stars`} className="reviews__rating-label form__rating-label" title={props.title}>
+    <>
+      <input className="form__rating-input visually-hidden" name="rating" value={value} id={`${value}-stars`} type="radio" onChange={onChangeEvent} />
+      <label htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={title}>
         <svg className="form__star-image" width="37" height="33">
           <use xlinkHref="#icon-star"></use>
         </svg>
       </label>
-    </Fragment>
+    </>
   );
 }
 

@@ -1,22 +1,21 @@
-import {useState} from 'react';
 import {Offer} from '../../types/offer';
 import {generatePath, Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
 type OfferCardProps = {
   offer: Offer;
+  onMouseEnterHandler: () => void;
+  onMouseLeaveHandler: () => void;
 };
 
-function OfferCard(offer: OfferCardProps) : JSX.Element {
-  const {id, images, title, type, price, rating, isPremium} = offer.offer;
+function OfferCard({offer, onMouseEnterHandler, onMouseLeaveHandler}: OfferCardProps) : JSX.Element {
+  const {id, images, title, type, price, rating, isPremium} = offer;
   const route = generatePath(AppRoute.Offer, {
     id: `${id}`
   });
 
-  const [, setActiveCard] = useState<number | null>(null);
-
   return (
-    <article className="cities__card place-card" onMouseEnter={() => setActiveCard(id)} onMouseLeave={() => setActiveCard(null)}>
+    <article className="cities__card place-card" onMouseEnter={onMouseEnterHandler} onMouseLeave={onMouseLeaveHandler}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>

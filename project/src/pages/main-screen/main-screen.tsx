@@ -1,11 +1,21 @@
+import {useState} from 'react';
 import OfferCardList from '../../components/offer-card-list/offer-card-list';
 import {Offers} from '../../types/offer';
+import {City} from '../../types/city';
+import Map from '../../components/map/map';
 
 type MainScreenProps = {
   offers: Offers;
+  city: City;
 }
 
-function MainScreen({offers} : MainScreenProps) : JSX.Element {
+function MainScreen({offers, city} : MainScreenProps) : JSX.Element {
+  const [activeCardId, setActiveCard] = useState<number | null>(null);
+
+  const onChangeActiveCard = (id: number | null) => {
+    setActiveCard(id);
+  };
+
   return (
     <div className="page page--gray page--main">
       <main className="page__main page__main--index">
@@ -66,10 +76,10 @@ function MainScreen({offers} : MainScreenProps) : JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferCardList offers={offers} />
+              <OfferCardList offers={offers} onChangeActiveCard={onChangeActiveCard} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map city={city} offers={offers} activeCardId={activeCardId}/>
             </div>
           </div>
         </div>
