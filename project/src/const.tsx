@@ -4,6 +4,19 @@ export enum AppRoute {
   Offer = '/offer/:id'
 }
 
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
+export enum APIRoute {
+  Offers = '/hotels',
+  Reviews = '/comments',
+  Login = '/login',
+  Logout = '/logout'
+}
+
 export const RATING_DATA = [
   {
     value: '5',

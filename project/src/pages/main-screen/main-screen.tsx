@@ -6,16 +6,19 @@ import {useAppSelector} from '../../hooks';
 import Cities from '../../components/cities/cities';
 import CitiesEmpty from '../../components/cities-empty/cities-empty';
 
-function MainScreen() : JSX.Element {
+type MainScreenProps = {
+  offers: Offers;
+}
+
+function MainScreen({offers} : MainScreenProps) : JSX.Element {
   const activeLocation = useAppSelector((state) => state.location);
-  const offers = useAppSelector((state) => state.offers);
 
   const [currentOffers, setCurrentOffers] = useState<Offers>([]);
 
   const isOffers = Boolean(currentOffers.length);
 
   useEffect(() => {
-    const filteredOffers = offers.filter((offer) => offer.city.title === activeLocation);
+    const filteredOffers = offers.filter((offer) => offer.city.name === activeLocation);
     setCurrentOffers(filteredOffers);
   }, [activeLocation, offers]);
 

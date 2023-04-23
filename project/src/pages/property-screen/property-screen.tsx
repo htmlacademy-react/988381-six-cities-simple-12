@@ -4,18 +4,20 @@ import ReviewsList from '../../components/reviews-list/reviews-list';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
 import NearPlacesList from '../../near-places-list/near-places-list';
+import {Reviews} from '../../types/review';
 
 type PropertyScreenProps = {
   offers: Offers;
+  reviews: Reviews;
 }
 
-function PropertyScreen({offers} : PropertyScreenProps) : JSX.Element {
+function PropertyScreen({offers, reviews} : PropertyScreenProps) : JSX.Element {
   const params = useParams();
   const currentId = Number(params.id);
 
   const currentOffer = offers.find((offer) => offer.id === currentId) as Offer || undefined;
 
-  const {images, title, type, price, rating, isPremium, bedrooms, adults, features, host, description, reviews} = currentOffer;
+  const {bedrooms, description, goods, host, images, isPremium, maxAdults, price,rating, title, type} = currentOffer;
 
   return (
     <main className="page__main page__main--property">
@@ -23,8 +25,8 @@ function PropertyScreen({offers} : PropertyScreenProps) : JSX.Element {
         <div className="property__gallery-container container">
           <div className="property__gallery">
             {images.map((image) => (
-              <div key={image.id} className="property__image-wrapper">
-                <img className="property__image" src={image.src} alt="Studio" />
+              <div key={image} className="property__image-wrapper">
+                <img className="property__image" src={image} alt="Studio" />
               </div>
             ))}
           </div>
@@ -56,7 +58,7 @@ function PropertyScreen({offers} : PropertyScreenProps) : JSX.Element {
                 {bedrooms}
               </li>
               <li className="property__feature property__feature--adults">
-                {adults}
+                {maxAdults}
               </li>
             </ul>
             <div className="property__price">
@@ -66,9 +68,9 @@ function PropertyScreen({offers} : PropertyScreenProps) : JSX.Element {
             <div className="property__inside">
               <h2 className="property__inside-title">What&apos;s inside</h2>
               <ul className="property__inside-list">
-                {features.map((feature) => (
-                  <li key={feature} className="property__inside-item">
-                    {feature}
+                {goods.map((good) => (
+                  <li key={good} className="property__inside-item">
+                    {good}
                   </li>
                 ))}
               </ul>
@@ -77,7 +79,7 @@ function PropertyScreen({offers} : PropertyScreenProps) : JSX.Element {
               <h2 className="property__host-title">Meet the host</h2>
               <div className="property__host-user user">
                 <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                  <img className="property__avatar user__avatar" src={host.image.src} width="74" height="74" alt="Host avatar" />
+                  <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
                 </div>
                 <span className="property__user-name">
                   {host.name}
@@ -89,11 +91,7 @@ function PropertyScreen({offers} : PropertyScreenProps) : JSX.Element {
                 )}
               </div>
               <div className="property__description">
-                {description.map((paragraph) => (
-                  <p key={paragraph} className="property__text">
-                    {paragraph}
-                  </p>
-                ))}
+                <p className="property__text">{description}</p>
               </div>
             </div>
             <section className="property__reviews reviews">

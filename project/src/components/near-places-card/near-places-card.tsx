@@ -21,7 +21,7 @@ function NearPlacesCard({place} : NearPlacesCardProps) : JSX.Element {
       )}
       <div className="near-places__image-wrapper place-card__image-wrapper">
         <Link to={route}>
-          <img className="place-card__image" src={images[0].src} width="260" height="200" alt="Place" />
+          <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place" />
         </Link>
       </div>
       <div className="place-card__info">

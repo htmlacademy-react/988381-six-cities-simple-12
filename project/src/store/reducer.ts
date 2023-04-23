@@ -1,15 +1,25 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {LOCATIONS, SortTypes} from '../const';
-import {offers} from '../mocks/offers';
-import {setLocation, sortOffers} from './action';
+import {AuthorizationStatus, LOCATIONS, SortTypes} from '../const';
+import {loadOffers, requireAuthorization, setLocation, sortOffers, setOffersStatus} from './action';
+import {Offers} from '../types/offer';
 
-const initialState = {
+type InitialState = {
+  location : string;
+  offers: Offers;
+  sortType: string;
+  authorizationStatus: AuthorizationStatus;
+  isOfferDataLoading: boolean;
+}
+
+const initialState : InitialState = {
   location: LOCATIONS[0],
-  offers: offers,
-  sortType: SortTypes.DEFAULT
+  offers: [],
+  sortType: SortTypes.DEFAULT,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  isOfferDataLoading: false
 };
 
-export const updateStore = createReducer(initialState, (builder) => {
+export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setLocation, (state, action) => {
       state.location = action.payload;
@@ -28,7 +38,16 @@ export const updateStore = createReducer(initialState, (builder) => {
           state.offers = state.offers.sort((a, b) => b.rating - a.rating);
           break;
         default:
-          state.offers = offers;
+          state.offers = state.offers.sort((a, b) => 0);
       }
+    })
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setOffersStatus, (state, action) => {
+      state.isOfferDataLoading = action.payload;
     });
 });

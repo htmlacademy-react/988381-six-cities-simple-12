@@ -1,24 +1,34 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import Layout from '../layout/layout';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import PropertyScreen from '../../pages/property-screen/property-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import {Offers} from '../../types/offer';
+import {useAppSelector} from '../../hooks';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import {reviews} from '../../mocks/reviews';
 
-type AppScreenProps = {
-  offers: Offers;
-}
+function App(): JSX.Element {
 
-function App({offers} : AppScreenProps): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+
+  const isOfferDataLoading = useAppSelector((state) => state.isOfferDataLoading);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOfferDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main} element={<Layout />}>
           <Route
             path={AppRoute.Main}
-            element={<MainScreen />}
+            element={<MainScreen offers={offers} />}
           />
           <Route
             path={AppRoute.Login}
@@ -26,7 +36,7 @@ function App({offers} : AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<PropertyScreen offers={offers} />}
+            element={<PropertyScreen offers={offers} reviews={reviews} />}
           />
           <Route
             path='*'
