@@ -7,11 +7,10 @@ import PropertyScreen from '../../pages/property-screen/property-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import {useAppSelector} from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import {reviews} from '../../mocks/reviews';
 
 function App(): JSX.Element {
 
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector((state) => state.offers.filter((offer) => offer.city.name === state.location));
 
   const isOfferDataLoading = useAppSelector((state) => state.isOfferDataLoading);
 
@@ -35,7 +34,7 @@ function App(): JSX.Element {
           />
           <Route
             path={AppRoute.Offer}
-            element={<PropertyScreen offers={offers} reviews={reviews} />}
+            element={<PropertyScreen />}
           />
           <Route
             path='*'

@@ -1,30 +1,63 @@
+import {useEffect, useState} from 'react';
 import {Offer, Offers} from '../../types/offer';
 import {useParams} from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
 import NearPlacesList from '../../near-places-list/near-places-list';
-import {Reviews} from '../../types/review';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {AuthorizationStatus} from '../../const';
+import {
+  fetchNearbyOffersAction,
+  fetchOfferAction,
+  fetchReviewsAction
+} from '../../store/api-action';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-type PropertyScreenProps = {
-  offers: Offers;
-  reviews: Reviews;
-}
+function PropertyScreen() : JSX.Element {
+  const dispatch = useAppDispatch();
 
-function PropertyScreen({offers, reviews} : PropertyScreenProps) : JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus) === AuthorizationStatus.Auth;
+
   const params = useParams();
   const currentId = Number(params.id);
 
-  const currentOffer = offers.find((offer) => offer.id === currentId) as Offer || undefined;
+  const [currentOffer, setCurrentOffer] = useState<Offer | null>(null);
+  const [currentNearbyOffers, setCurrentNearbyOffers] = useState<Offers>([]);
 
-  const {bedrooms, description, goods, host, images, isPremium, maxAdults, price,rating, title, type} = currentOffer;
+  useEffect(() => {
+    dispatch(fetchOfferAction(currentId));
+    dispatch(fetchReviewsAction(currentId));
+    dispatch(fetchNearbyOffersAction(currentId));
+  }, [currentId, dispatch]);
 
-  return (
+  const reviews = useAppSelector((state) => state.reviews);
+
+  const offer = useAppSelector((state) => state.offer);
+  useEffect(() => {
+    setCurrentOffer(offer);
+  }, [offer]);
+
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffers);
+  useEffect(() => {
+    setCurrentNearbyOffers(nearbyOffers);
+  }, [nearbyOffers]);
+
+  const isNearbyOfferDataLoading = useAppSelector((state) => state.isNearbyOfferDataLoading);
+
+  if (isNearbyOfferDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+  return currentOffer && currentNearbyOffers.length ? (
     <main className="page__main page__main--property">
       <section className="property">
         <div className="property__gallery-container container">
           <div className="property__gallery">
-            {images.map((image) => (
+            {currentOffer.images.map((image) => (
               <div key={image} className="property__image-wrapper">
                 <img className="property__image" src={image} alt="Studio" />
               </div>
@@ -33,42 +66,42 @@ function PropertyScreen({offers, reviews} : PropertyScreenProps) : JSX.Element {
         </div>
         <div className="property__container container">
           <div className="property__wrapper">
-            {isPremium && (
+            {currentOffer.isPremium && (
               <div className="property__mark">
                 <span>Premium</span>
               </div>
             )}
             <div className="property__name-wrapper">
               <h1 className="property__name">
-                {title}
+                {currentOffer.title}
               </h1>
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">
-                <span style={{width: `${20 * Math.floor(rating)}%`}}></span>
+                <span style={{width: `${20 * Math.floor(currentOffer.rating)}%`}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="property__rating-value rating__value">{rating}</span>
+              <span className="property__rating-value rating__value">{currentOffer.rating}</span>
             </div>
             <ul className="property__features">
               <li className="property__feature property__feature--entire">
-                {type}
+                {currentOffer.type}
               </li>
               <li className="property__feature property__feature--bedrooms">
-                {bedrooms}
+                {currentOffer.bedrooms}
               </li>
               <li className="property__feature property__feature--adults">
-                {maxAdults}
+                {currentOffer.maxAdults}
               </li>
             </ul>
             <div className="property__price">
-              <b className="property__price-value">&euro;{price}</b>
+              <b className="property__price-value">&euro;{currentOffer.price}</b>
               <span className="property__price-text">&nbsp;night</span>
             </div>
             <div className="property__inside">
               <h2 className="property__inside-title">What&apos;s inside</h2>
               <ul className="property__inside-list">
-                {goods.map((good) => (
+                {currentOffer.goods.map((good) => (
                   <li key={good} className="property__inside-item">
                     {good}
                   </li>
@@ -79,38 +112,38 @@ function PropertyScreen({offers, reviews} : PropertyScreenProps) : JSX.Element {
               <h2 className="property__host-title">Meet the host</h2>
               <div className="property__host-user user">
                 <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                  <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                  <img className="property__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                 </div>
                 <span className="property__user-name">
-                  {host.name}
+                  {currentOffer.host.name}
                 </span>
-                {host.isPro && (
+                {currentOffer.host.isPro && (
                   <span className="property__user-status">
                     Pro
                   </span>
                 )}
               </div>
               <div className="property__description">
-                <p className="property__text">{description}</p>
+                <p className="property__text">{currentOffer.description}</p>
               </div>
             </div>
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{Object.keys(reviews).length}</span></h2>
               <ReviewsList reviews={reviews} />
-              <ReviewForm />
+              {authorizationStatus && <ReviewForm />}
             </section>
           </div>
         </div>
-        <Map className="property" offers={offers} activeCardId={currentId}/>
+        <Map className="property" offers={currentNearbyOffers} currentOffer={currentOffer} activeCardId={currentId}/>
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <NearPlacesList places={offers} currentId={currentId}/>
+          <NearPlacesList places={currentNearbyOffers} currentId={currentId}/>
         </section>
       </div>
     </main>
-  );
+  ) : <NotFoundScreen />;
 }
 
 export default PropertyScreen;
