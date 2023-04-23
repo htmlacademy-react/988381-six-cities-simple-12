@@ -1,5 +1,5 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import Layout from '../layout/layout';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -14,9 +14,8 @@ function App(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
 
   const isOfferDataLoading = useAppSelector((state) => state.isOfferDataLoading);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isOfferDataLoading) {
+  if (isOfferDataLoading) {
     return (
       <LoadingScreen />
     );
