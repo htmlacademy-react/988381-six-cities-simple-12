@@ -1,7 +1,7 @@
 import {Outlet, useLocation} from 'react-router-dom';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import Header from '../../components/header/header';
-import {AppRoute} from '../../const';
+import {AppRoute} from '../../consts';
 
 function Layout() : JSX.Element {
   const location = useLocation();

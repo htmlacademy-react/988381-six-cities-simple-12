@@ -1,18 +1,19 @@
 import {useEffect, useRef} from 'react';
 import useMap from '../../hooks/useMap';
-import {City} from '../../types/city';
-import {Offers} from '../../types/offer';
+import {Offer, Offers} from '../../types/offer';
 import {Icon, Marker} from 'leaflet';
-import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../const';
+import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../consts';
 
 type MapProps = {
-  city: City;
+  className: string;
   offers: Offers;
+  currentOffer?: Offer;
   activeCardId: number | null;
 }
 
-function Map({city, offers, activeCardId} : MapProps) : JSX.Element {
+function Map({className, offers, currentOffer, activeCardId} : MapProps) : JSX.Element {
   const mapRef = useRef(null);
+  const city = offers[0].city;
   const map = useMap(mapRef, city);
 
   const defaultCustomIcon = new Icon({
@@ -31,18 +32,29 @@ function Map({city, offers, activeCardId} : MapProps) : JSX.Element {
     if (map) {
       offers.forEach((offer) => {
         const marker = new Marker({
-          lat: offer.city.lat,
-          lng: offer.city.lng,
+          lat: offer.location.latitude,
+          lng: offer.location.longitude,
         });
 
         marker.setIcon((offer.id === activeCardId) ? currentCustomIcon : defaultCustomIcon).addTo(map);
       });
+
+      if (currentOffer) {
+        const marker = new Marker({
+          lat: currentOffer.location.latitude,
+          lng: currentOffer.location.longitude,
+        });
+
+        marker.setIcon(currentCustomIcon).addTo(map);
+      }
+
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
     }
   });
 
   return (
     <section
-      className='cities__map map'
+      className={`${className}__map map`}
       ref={mapRef}
     >
 

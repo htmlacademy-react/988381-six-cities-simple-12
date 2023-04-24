@@ -1,24 +1,38 @@
-import {Images} from './image';
-import {Host} from './host';
-import {Reviews} from './review';
-import {City} from './city';
 
+export type City = {
+  location: Location;
+  name: string;
+}
+
+export type Host = {
+  avatarUrl: string;
+  id: number;
+  isPro: boolean;
+  name: string;
+}
+
+export type Location = {
+  latitude: number;
+  longitude: number;
+  zoom: number;
+}
 
 export type Offer = {
+  bedrooms: number;
+  city: City;
+  description: string;
+  goods: string[];
+  host: Host;
   id: number;
-  images: Images;
-  title: string;
-  type: string;
+  images: string[];
+  isPremium: boolean;
+  location: Location;
+  maxAdults: number;
+  previewImage: string;
   price: number;
   rating: number;
-  isPremium : boolean;
-  bedrooms: string;
-  adults: string;
-  features: string[];
-  host: Host;
-  description: string[];
-  reviews: Reviews;
-  city: City;
+  title: string;
+  type: string;
 }
 
 export type Offers = Offer[];

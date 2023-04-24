@@ -1,12 +1,11 @@
-import {Image} from './image';
+import {User} from './user';
 
 export type Review = {
-  id: number;
-  image: Image;
-  name: string;
-  rating: number;
   comment: string;
   date: string;
+  id: number;
+  rating: number;
+  user: User;
 }
 
 export type Reviews = Review[];
