@@ -1,7 +1,7 @@
 import {store} from '../store';
 import {AuthorizationStatus} from '../consts';
 import {Offer, Offers} from './offer';
-import {Review, Reviews} from "./review";
+import {Review, Reviews} from './review';
 
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
