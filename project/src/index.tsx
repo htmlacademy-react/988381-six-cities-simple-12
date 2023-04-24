@@ -1,8 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import {offers} from './mocks/offers';
-import {city} from './mocks/city';
+import {Provider} from 'react-redux';
+import {store} from './store';
+import {checkAuthAction, fetchOffersAction} from './store/api-action';
+import HistoryRoute from './components/history-route/history-route';
+import browserHistory from './browserHistory';
+
+store.dispatch(fetchOffersAction());
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -10,6 +16,10 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App offers={offers} city={city}/>
+    <Provider store={store}>
+      <HistoryRoute history={browserHistory}>
+        <App />
+      </HistoryRoute>
+    </Provider>
   </React.StrictMode>,
 );
