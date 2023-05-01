@@ -7,7 +7,7 @@ import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AppRoute} from '../consts';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
-import {Review, Reviews} from '../types/review';
+import {Reviews} from '../types/review';
 import {ReviewData} from '../types/review-data';
 
 export const fetchOfferAction = createAsyncThunk<Offer, number, {
@@ -41,7 +41,7 @@ export const fetchNearbyOffersAction = createAsyncThunk<Offers, number, {
 }>(
   'data/fetchNearbyOffers',
   async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Offers>(`${APIRoute.Offers}/${id}${APIRoute.Nearby}`);
+    const {data} = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
     return data;
   },
 );
@@ -58,39 +58,41 @@ export const fetchReviewsAction = createAsyncThunk<Reviews, number, {
   },
 );
 
-export const sendReviewAction = createAsyncThunk<Review, ReviewData, {
+export const sendReviewAction = createAsyncThunk<Reviews, ReviewData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/sendReview',
   async ({id, comment, rating}, {dispatch, extra: api}) => {
-    const {data} = await api.post<Review>(`${APIRoute.Reviews}/${id}`, {comment, rating});
+    const {data} = await api.post<Reviews>(`${APIRoute.Reviews}/${id}`, {comment, rating});
     return data;
   },
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
-    await api.get(APIRoute.Login);
+    const {data} = await api.get<UserData>(APIRoute.Login);
+    return data;
   },
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, {
+export const loginAction = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/login',
   async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(token);
+    const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
+    saveToken(data.token);
     dispatch(redirectToRoute(AppRoute.Login));
+    return data;
   },
 );
 

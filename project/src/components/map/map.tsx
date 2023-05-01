@@ -1,8 +1,8 @@
 import {useEffect, useRef} from 'react';
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map';
 import {Offer, Offers} from '../../types/offer';
 import {Icon, Marker} from 'leaflet';
-import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../consts';
+import {Markers} from '../../consts';
 
 type MapProps = {
   className: string;
@@ -17,13 +17,13 @@ function Map({className, offers, currentOffer, activeCardId} : MapProps) : JSX.E
   const map = useMap(mapRef, city);
 
   const defaultCustomIcon = new Icon({
-    iconUrl: URL_MARKER_DEFAULT,
+    iconUrl: Markers.URL_MARKER_DEFAULT,
     iconSize: [27, 39],
     iconAnchor: [20, 39],
   });
 
   const currentCustomIcon = new Icon({
-    iconUrl: URL_MARKER_CURRENT,
+    iconUrl: Markers.URL_MARKER_CURRENT,
     iconSize: [27, 39],
     iconAnchor: [20, 39],
   });
@@ -56,6 +56,7 @@ function Map({className, offers, currentOffer, activeCardId} : MapProps) : JSX.E
     <section
       className={`${className}__map map`}
       ref={mapRef}
+      data-testid='map'
     >
 
     </section>

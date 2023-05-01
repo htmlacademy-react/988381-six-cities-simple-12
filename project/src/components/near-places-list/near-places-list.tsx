@@ -1,5 +1,5 @@
-import {Offers} from '../types/offer';
-import NearPlacesCard from '../components/near-places-card/near-places-card';
+import {Offers} from '../../types/offer';
+import NearPlacesCard from '../near-places-card/near-places-card';
 
 type NearPlacesListProps = {
   places: Offers;

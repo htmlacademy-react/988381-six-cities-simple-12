@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import {store} from './store';
 import {checkAuthAction, fetchOffersAction} from './store/api-action';
 import HistoryRoute from './components/history-route/history-route';
-import browserHistory from './browserHistory';
+import browserHistory from './browser-history';
 
 store.dispatch(fetchOffersAction());
 store.dispatch(checkAuthAction());

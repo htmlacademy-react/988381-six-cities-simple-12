@@ -27,7 +27,7 @@ function LoginScreen() : JSX.Element {
     dispatch(loginAction(authData));
   };
 
-  const submitHandle = (evt: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (loginRef.current !== null && (passwordRef.current !== null && checkPassword(passwordRef.current.value))) {
@@ -43,7 +43,7 @@ function LoginScreen() : JSX.Element {
       <div className="page__login-container container">
         <section className="login">
           <h1 className="login__title">Sign in</h1>
-          <form className="login__form form" action="#" method="post" onSubmit={submitHandle}>
+          <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">E-mail</label>
               <input className="login__input form__input" type="email" name="email" placeholder="Email" ref={loginRef} required />

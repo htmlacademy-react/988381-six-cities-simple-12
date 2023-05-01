@@ -20,22 +20,8 @@ export const offerData = createSlice({
     setCurrentLocation: (state, action : PayloadAction<string>) => {
       state.location = action.payload;
     },
-    sortOffers: (state, action : PayloadAction<string>) => {
+    setSortType: (state, action : PayloadAction<string>) => {
       state.sortType = action.payload;
-
-      switch (state.sortType) {
-        case SortTypes.PRICE_TO_HIGH:
-          state.offers = state.offers.sort((a, b) => a.price - b.price);
-          break;
-        case SortTypes.PRICE_TO_LOW:
-          state.offers = state.offers.sort((a, b) => b.price - a.price);
-          break;
-        case SortTypes.RATING:
-          state.offers = state.offers.sort((a, b) => b.rating - a.rating);
-          break;
-        default:
-          state.offers = state.offers.sort((a, b) => 0);
-      }
     }
   },
   extraReducers(builder) {
@@ -63,4 +49,4 @@ export const offerData = createSlice({
   }
 });
 
-export const {setCurrentLocation, sortOffers} = offerData.actions;
+export const {setCurrentLocation, setSortType} = offerData.actions;

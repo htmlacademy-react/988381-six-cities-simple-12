@@ -21,7 +21,7 @@ function Cities({offers, activeLocation} : CitiesProps) : JSX.Element {
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">{offers.length} places to stay in {activeLocation}</b>
-        <OfferCardListSort offers={offers}/>
+        <OfferCardListSort/>
         <OfferCardList offers={offers} onChangeActiveCard={onChangeActiveCard} />
       </section>
       <div className="cities__right-section">

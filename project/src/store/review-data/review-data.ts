@@ -4,7 +4,6 @@ import {NameSpace} from '../../consts';
 import {fetchReviewsAction, sendReviewAction} from '../api-action';
 
 const initialState : ReviewData = {
-  review: null,
   reviews: [],
   hasError: false,
   isReviewSending: false
@@ -24,7 +23,7 @@ export const reviewData = createSlice({
         state.isReviewSending = true;
       })
       .addCase(sendReviewAction.fulfilled, (state, action) => {
-        state.review = action.payload;
+        state.reviews = action.payload;
         state.isReviewSending = false;
       })
       .addCase(sendReviewAction.rejected, (state) => {
