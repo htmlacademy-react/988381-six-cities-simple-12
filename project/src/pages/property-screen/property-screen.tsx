@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import ReviewForm from '../../components/review-form/review-form';
 import Map from '../../components/map/map';
-import NearPlacesList from '../../near-places-list/near-places-list';
+import NearPlacesList from '../../components/near-places-list/near-places-list';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {AuthorizationStatus} from '../../consts';
 import {fetchNearbyOffersAction, fetchOfferAction, fetchReviewsAction} from '../../store/api-action';

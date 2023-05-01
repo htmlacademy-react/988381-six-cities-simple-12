@@ -8,3 +8,5 @@ export const getNearbyOffers = (state: State): Offers => state[NameSpace.Data].n
 export const getOfferDataLoadingStatus = (state: State): boolean => state[NameSpace.Data].isOfferDataLoading;
 export const getErrorStatus = (state: State): boolean => state[NameSpace.Data].hasError;
 export const getCurrentLocation = (state: State): string => state[NameSpace.Data].location;
+
+export const getSortType = (state: State): string => state[NameSpace.Data].sortType;

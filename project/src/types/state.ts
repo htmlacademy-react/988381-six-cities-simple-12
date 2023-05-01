@@ -1,10 +1,12 @@
 import {store} from '../store';
 import {AuthorizationStatus} from '../consts';
 import {Offer, Offers} from './offer';
-import {Review, Reviews} from './review';
+import {Reviews} from './review';
+import {UserData} from './user-data';
 
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
+  userData: UserData | null;
 }
 
 export type OfferData = {
@@ -18,7 +20,6 @@ export type OfferData = {
 }
 
 export type ReviewData = {
-  review: Review | null;
   reviews: Reviews;
   hasError: boolean;
   isReviewSending: boolean;
