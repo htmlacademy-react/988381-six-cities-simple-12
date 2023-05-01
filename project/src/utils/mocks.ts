@@ -4,7 +4,6 @@ import {LOCATIONS} from '../consts';
 import {Review, Reviews} from '../types/review';
 import {UserData} from '../types/user-data';
 import {ReviewData} from '../types/review-data';
-import {AuthData} from '../types/auth-data';
 
 export const makeFakeOffer = (): Offer => ({
   bedrooms: datatype.number(3),
@@ -84,9 +83,4 @@ export const makeFakeUserData = (): UserData => ({
   id: datatype.number(),
   email: internet.email(),
   token: datatype.string()
-});
-
-export const makeFakeAuthData = (): AuthData => ({
-  login: internet.email(),
-  password: internet.password()
 });
