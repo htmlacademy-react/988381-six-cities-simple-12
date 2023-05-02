@@ -19,7 +19,7 @@ function LoginScreen() : JSX.Element {
   }
 
   const checkPassword = (password: string) => {
-    const pattern = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    const pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$/g;
     return pattern.test(password);
   };
 
